@@ -33,6 +33,23 @@ Metal Man  | E5(E1) | B1(E2) | B2(E3) | B3(E4) | B4(E5) |
 
 The ultimate password is thus A5 B24 C135 D45 E2.
 
+Street Fighter X Mega Man
+-------------------------
+Perhaps appropriately for a 25th anniversary game, the password system
+for this game is exactly the same as the one for Mega Man II. Only the
+names have changed:
+
+Fighter      Robot
+---------+--------------
+Blanka   | Heat Man
+C. Viper | Quick Man
+Ryu      | Flash Man
+Urien    | Crash Man
+Dhalsim  | Bubble Man
+Chun-Li  | Wood Man
+Rolento  | Air Man
+Rose     | Metal Man
+
 Mega Man III
 ------------
 One red dot indicates the number of E-tanks that you have, from zero
