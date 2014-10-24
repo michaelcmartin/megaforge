@@ -1,0 +1,437 @@
+Mega Man II
+-----------
+There are 9 red dots to be placed on a 5x5 matrix.  One indicates the
+number of energy tanks; this goes in the "A" row, with A1 being zero
+energy tanks and A5 being four.
+
+Each other dot indicates whether the status of a robot.  The codes
+appear to change when the number of energy tanks change; however, 
+increasing the number of tanks by one simply bumps each dot to the
+right one notch.  Bumping a dot off the edge of the array moves it to
+the next row down; bumping a dot off E5 moves it to B1.
+
+The chart below ignores this and provides the information as a table.
+A dot in the first coordinate indicates this robot has been beaten; a
+dot in the parenthesized location indicates that it has not yet been
+defeated.
+
+Item 1 comes free with Heat Man; item 2 with Air Man, and item 3 with
+Flash Man.
+
+                          Number of Tanks
+Robot          0        1        2        3        4
+-----------+--------+--------+--------+--------+--------+
+Heat Man   | B2(D5) | B3(E1) | B4(E2) | B5(E3) | C1(E4) |
+Quick Man  | B4(C4) | B5(C5) | C1(D1) | C2(D2) | C3(D3) |
+Flash Man  | C1(E4) | C2(E5) | C3(B1) | C4(B2) | C5(B3) |
+Crash Man  | C5(E2) | D1(E3) | D2(E4) | D3(E5) | D4(B1) |
+Bubble Man | D1(C3) | D2(C4) | D3(C5) | D4(D1) | D5(D2) |
+Wood Man   | D3(B5) | D4(C1) | D5(C2) | E1(C3) | E2(C4) |
+Air Man    | E3(D2) | E4(D3) | E5(D4) | B1(D5) | B2(E1) |
+Metal Man  | E5(E1) | B1(E2) | B2(E3) | B3(E4) | B4(E5) |
+-----------+--------+--------+--------+--------+--------+
+
+The ultimate password is thus A5 B24 C135 D45 E2.
+
+Mega Man III
+------------
+One red dot indicates the number of E-tanks that you have, from zero
+to nine, like so:
+
+0: C5; 1: E6; 2: E4; 3: B4; 4: A5
+5: C1; 6: D2; 7: C3; 8: F2; 9: A6
+
+The robots are organized in pairs.  In each pair one is "dominant"
+and one is "recessive."  If only one of the two has been beaten there
+will be a red dot at the listed location.  If both have been beaten
+there will be a blue dot at the dominant robot's location.
+
+Example: Top Man is the dominant robot of the Top Man/Snake Man pair.
+If Snake Man is beaten before Top Man, there is a red dot at F6.  If
+you then beat Top Man, it becomes a blue dot at A3.  If you instead
+beat Top Man first, you would have a red dot at A3 that turned blue
+when you beat Snake Man.
+
+In the chart below, the first robot listed on each row is the
+dominant robot.
+
+Basic Robots
+
+Top Man:    A3 -- Snake Man:  F6
+Spark Man:  F4 -- Shadow Man: D6
+Needle Man: D3 -- Magnet Man: F5
+Gemini Man: B5 -- Hard Man:   C4
+
+Docbots
+
+Spark Man:  A1 -- Shadow Man: A4
+Needle Man: B2 -- Gemini Man: B6
+
+Put a red dot on E1 to defeat Break Man.
+
+Note that Mega Man III is somewhat unique in that it "sanity checks"
+your passwords; if a Docbot is marked as beaten when all the basic
+robots haven't been, this invalidates the password.  Likewise, a red
+dot at E1 invalidates any password that isn't for the Wily stage.
+
+E-tanks aren't checked; the password Red A6 will start the game "from
+scratch" except for the minor detail that you now have 9 E-tanks.  Of
+course, it's possible (though tedious) to do this honestly.
+
+The ultimate code for Mega Man III is:
+Red: A6 E1
+Blue: A13 B25 D3 F4
+
+Mega Man IV
+-----------
+Mega Man IV's password system is somewhat simplified from Mega Man
+III's because it no longer keeps track of E-tanks; however, the
+password validates itself, making random guessing of passwords
+effectively impossible (unlike Mega Man III).
+
+There are six red dots in Mega Man IV's password; four of them
+indicate the status of the robots, one indicates the special devices
+you have acquired, and the final dot is a "checksum" and depends on
+how many devices, total, you have acquired.
+
+The charts below are organized by dot, each of which governs two
+devices.  After these five dots have been selected, choose the
+correct location for the checksum dot.
+
+The ultimate code for Mega Man IV is A14 B5 E2 F13.
+
++-------------+----+    
+| Neither     | A2 |    Checksum codes:
+| Toad Man    | B1 |    
+| Bright Man  | C2 |    0: F5
+| Both        | A1 |    1: A6
++-------------+----+    2: B2
+| Neither     | A3 |    3: B3
+| Pharaoh Man | B4 |    4: C1
+| Drill Man   | C3 |    5: C4
+| Both        | A4 |    6: C6
++-------------+----+    7: D2
+| Neither     | A5 |    8: E4
+| Ring Man    | B6 |    9: E6
+| Dust Man    | C5 |   10: F1
+| Both        | B5 | 
++-------------+----+
+| Neither     | D1 |
+| Dive Man    | E1 |
+| Skull Man   | F2 |
+| Both        | E2 |
++-------------+----+
+| Neither     | E3 |
+| Balloon     | D3 |
+| Wire        | D4 |
+| Both        | F3 |
++-------------+----+
+
+Mega Man V
+----------
+One of the more involved password systems, Mega Man V crams twice as
+much information into each dot than any earlier system.
+
+There are three red dots and three blue dots in the Mega Man V
+password.  Each red dot gives the status of three robots.  Each blue
+dot gives the status of the three letters on those robot's stages.
+
+The charts below group the robots and their letters.  To construct a
+password, first choose which robots have been defeated.  Place the
+three red dots in the unparenthesized locations given by the chart.
+
+Example: You wish to have defeated Gravity Man, Stone Man, and 
+Napalm Man.  You choose X _ X from group 1 (A6), _ _ _ from group 2
+(D3), and _ X _ from group 3 (E2).
+
+Now select the letters you wish to have obtained.  Place the blue
+dots in the unparenthesized locations if possible; otherwise place
+them in the parenthesized location.  (There is some overlap within a
+group because of these; this is OK because if it shows up there it
+signifies the same thing as the corresponding red dot from its
+group.)
+
+Continuing the example above: We want to have every letter except E.
+A6 is already occupied, so we put a blue dot at D6 instead.  Then we
+put blue dots at D4 and C1 and we're done.
+
+The ultimate password for Mega Man V is:
+RED: C1 D4 F6; BLUE: B4 D6 F1
+
+Group 1: Gravity Man - Wave Man   - Stone Man   : M - E - G
+Group 2: Gyro Man    - Star Man   - Charge Man  : A - M - A
+Group 3:               Napalm Man - Crystal Man :     N - V
+
+Pattern | Group 1 | Group 2 | Group 3 |
+--------+---------+---------+---------+
+ _ _ _  | F5 (E5) | D3 (B3) | B1 (F1) |
+ _ _ X  | B5 (D5) | F3 (C3) | D2 (A2) |
+ _ X _  | B6 (E6) | F4 (C4) | E2 (A2) |
+ _ X X  | C5 (D5) | A3 (C3) | C1 (F1) |
+ X _ _  | C6 (E6) | A4 (C4) |         |
+ X _ X  | A6 (D6) | E4 (B4) |         |
+ X X _  | A5 (E5) | E3 (B3) |         |
+ X X X  | F6 (D6) | D4 (B4) |         |
+--------+---------+---------+---------+
+
+Mega Man VI
+-----------
+Unique among the games, Mega Man VI's passwords are nondeterministic;
+there are between two and thirty-two different ways to represent a
+given level of progress.
+
+There are four completely different code systems used in Mega Man VI.
+The lower foursquare (E5-E6, F5-F6) has a single dot in it to 
+indicate which code is being used.  The E6 and F5 codes are used if
+you do not have the Energy Economizer; the E5 and F6 codes are used
+if you do.
+
+The four dots indicating defeat of the robots works essentially the
+same way as in Mega Man IV, except there is no checksum.  Furthermore
+if you have obtained Beat parts you have a choice of two places to
+put your dot.  I have not been able to determine any difference
+between these locations, and you can mix and match to your heart's
+content.
+
+Mega Man VI does *not* sanity check your passwords; you always need
+some Rush adaptions to get Beat-Parts or the Energy Economizer, but
+you can happily enter A15 C5 E15 and start the game with the
+Economizer; a good trick since you can't get it without Rush Power,
+which you can't get without beating Flame Man.  You can also hand
+yourself Beat Parts without the Rush Adaptations needed to reach
+them.
+
+An ultimate code for Mega Man VI is A4 C26 E45.
+
+E6 CODE               Wind   Blizzard   Plant   Flame
+(no economizer)      Yamato  Tomahawk  Knight  Centaur
+                   +--------+--------+--------+--------+
+Neither            |   A1   |   B1   |   B4   |   C4   |
+First only         |   B2   |   C3   |   A5   |   D4   |
+Second only        |   C2   |   D5   |   A6   |   E4   |
+Both               |   D3   |   A2   |   B6   |   F4   |
+Second with Letter | A4, C6 | B3, D2 | E1, E2 | A3, C1 |
+Both with Letter   | B5, D6 | C5, E3 | F1, F3 | D1, F2 |
+                   +--------+--------+--------+--------+
+
+F5 CODE:              Wind   Blizzard   Plant   Flame
+(no economizer)      Yamato  Tomahawk  Knight  Centaur
+                   +--------+--------+--------+--------+
+Neither            |   B1   |   A2   |   A3   |   B2   |
+First only         |   B3   |   C2   |   A4   |   A1   |
+Second only        |   B5   |   E2   |   A5   |   C1   |
+Both               |   D1   |   B4   |   E3   |   E1   |
+Second with Letter | B6, D3 | A6, D4 | C3, C4 | D2, F1 |
+Both with Letter   | D5, D6 | C6, F4 | C5, E4 | F2, F3 |
+                   +--------+--------+--------+--------+
+
+E5 CODE:              Wind   Blizzard   Plant   Flame
+(with economizer)    Yamato  Tomahawk  Knight  Centaur
+                   +--------+--------+--------+--------+
+Neither            |   E1   |   A1   |   A5   |   C3   |
+First only         |   E2   |   A2   |   A6   |   C4   |
+Second only        |   F1   |   B1   |   B5   |   D3   |
+Both               |   F2   |   B2   |   B6   |   D4   |
+Second with Letter | A3, B3 | C1, D1 | C5, D5 | E3, F3 |
+Both with Letter   | A4, B4 | C2, D2 | C6, D6 | E4, F4 |
+                   +--------+--------+--------+--------+
+
+F6 CODE:              Wind   Blizzard   Plant   Flame
+(with economizer)    Yamato  Tomahawk  Knight  Centaur
+                   +--------+--------+--------+--------+
+Neither            |   C1   |   A3   |   A1   |   C5   |
+First only         |   C2   |   A4   |   A2   |   C6   |
+Second only        |   D1   |   B3   |   B1   |   D5   |
+Both               |   D2   |   B4   |   B2   |   D6   |
+Second with Letter | A5, B5 | C3, D3 | E1, F1 | E3, F4 |
+Both with Letter   | A6, B6 | C4, D4 | E2, F2 | E4, F4 |
+                   +--------+--------+--------+--------+
+
+Mega Man VII
+------------
+Unlike the previous (or, for that matter, later) games in the series,
+Mega Man 7 stores a *lot* of state. Most previous games in the series
+ended up storing on the order of 10-12 bits of information; MM7 stores
+46, not counting its check bits.
+
+These bits are stored in a 4x4 grid of numbers from 1 to 8.  This
+gives us 3 bits per number and 2 spare bits for error
+correction/verification. The password starts from a base
+state---8735-2527-4416-8362, as it happens---and then things
+you acquire or accomplish will flip bits in this number. The result is
+then coerced into the 1-8 range.  (It's easiest to think of this as
+meaning that "8" is secretly "0".)
+
+Several numerical quantities tracked in the game: Bolts, E-Tanks,
+W-Tanks, and Beat Whistles. Bolts go from 0-999 (9 bits) and the
+others go from 0-4 (3 bits). These are stored as ordinary binary
+numbers. (Compare the earlier games, which effectively used a unary
+system to indicate E-Tank count.)
+
+The password "checksum" is two remaining bits that must be a certain
+value depending on how many other bits were flipped. (That means that
+having 127 bolts counts as seven bits worth of impact, but having 128
+only counts as one.) I call these two bits "check bit 1" and "check
+bit 2", and treat them as bits that can hold a value between 0 and
+3. To determine whether or not these bits should be flipped in the
+password, count up the number of all other bits flipped. As the number
+of bits increases, the pattern for the parity value is 0, 1, 0, 3, 2,
+1, 0, 3, 2, 1, 0, 3, 2, 1, 0... and so on.
+
+The more computery way to do that is to say "If the number of bits
+flipped is 0 or less, then that is your value. Otherwise, subtract
+the number from 2 and apply a bitmask of 0x03 to the result."
+
+The password checker will also make a perfunctory effort to ensure
+that you have not asked the game to start in an impossible situation,
+but as we will see, it doesn't try very hard.
+
+HOW TO GENERATE A PASSWORD
+
+We number the password squares in row-major order, like so:
+
+                            +--+--+--+--+
+                            | 0| 1| 2| 3|
+                            +--+--+--+--+
+                            | 4| 5| 6| 7|
+                            +--+--+--+--+
+                            | 8| 9|10|11|
+                            +--+--+--+--+
+                            |12|13|14|15|
+                            +--+--+--+--+
+
+For each change to the password, we represent that as a pair (n, b)
+where n is the number of the square to flip (as counted above) and b
+is the bit to flip (1, 2, or 4). You will XOR the value in the square
+by b to make the change.
+
+  Opening Stage: 6, 2
+
+The first level. Whether or not you impress Bass is not recorded. You
+need to have cleared it to get any other powers.
+
+  Cloud Man:   1, 4
+  Burst Man:   7, 1
+  Junk Man:    8, 4
+  Freeze Man: 10, 4
+
+The Tier 1 robots. Marking all four of these but none of the following
+ones will start you in the Robot Museum stage.
+
+  Robot Museum: 10, 1
+
+Marking this as beaten unlocks the Tier 2 robots. There is NOT a check
+to see whether you cleared all four Tier 1 robots here, so you can put
+the game in an impossible state here if you want.
+
+  Tier 2 Enabled: 1, 1
+
+This bit can only be set if Robot Museum is completed, and it must be
+set in order to select any of the Tier 2 robots below.
+
+  Spring Man:  4, 1
+  Shade Man:   5, 1
+  Slash Man:  13, 2
+  Turbo Man:  15, 1
+
+  All Robots:  4, 4
+
+If you have selected all 8 robots as beaten, you must also set the
+"All Robots" bit. Otherwise the game will put you at the robot select
+menu and will not unlock the Dr. Wily stage. Even an EXIT canister
+will not get you back on track, but doing a full traversal of an
+already-beaten level will.
+
+Collectibles
+
+These are basically the things you see on the second screen on the
+pause menu.
+
+R-U-S-H Letters:
+
+  R: 14, 1
+  U:  9, 4
+  S:  0, 4
+  H:  6, 4
+
+Bolts:
+
+  512 bolts:  5, 4
+  256 bolts:  2, 2
+  128 bolts:  0, 1
+   64 bolts: 14, 4
+   32 bolts: 12, 2
+   16 bolts:  5, 2
+    8 bolts: 11, 4
+    4 bolts:  8, 2
+    2 bolts:  2, 4
+    1 bolt:   4, 2
+
+Tanks:
+
+  4 W-Tanks:  3, 4
+  2 W-Tanks:  3, 1
+  1 W-Tank:   7, 2
+
+  4 E-Tanks: 15, 4
+  2 E-Tanks:  9, 1
+  1 E-Tank:  13, 1
+
+  S-Tank:    12, 4
+
+Beat:
+
+  Beat Rescued:  9, 2
+  4 Whistles:    3, 2
+  2 Whistles:    2, 1
+  1 Whistle:    10, 2
+
+It's legal to give yourself whistles without having rescued Beat, but
+they won't show up in your inventory, nor will they work. The verifier
+does not check to confirm that you've met the prequisites for rescuing
+Beat, so you can give yourself working whistles in the first level and
+it will be fine with that.
+
+There are maxima of 999 bolts and 4 W-Tanks, E-Tanks, or Beat
+Whistles.
+
+Miscellaneous:
+
+  Exit:      15, 2
+  E-Balancer: 1, 2
+  Power-Up:  12, 1
+  HyperBolt: 13, 4
+
+  Delivered HyperBolt: 11, 2
+
+Hilariously, "Delivered HyperBolt" does not require actually having
+the HyperBolt; Auto will greet you as if you had been there before and
+will have the full selection and the discount.
+
+Miscellaneous Powers:
+
+  Rush Jet:      0, 2
+  Rush Search:  11, 1
+  Suit Adapter: 14, 2
+  Protoshield:   7, 4
+
+The Protoshield requires you to have Tier 2 enabled. No other powers have precondition checks.
+
+Check bits:
+
+  Check bit 1: 6, 1
+  Check bit 2: 8, 1
+
+As described at the start, if x is the number of bits you
+flipped above, the check value is given by the formula
+
+      0           if x is 0
+     (2-x) & 3    otherwise
+
+SO YOU JUST WANT EVERYTHING
+
+Getting everything doesn't involve flipping all the bits, because that
+would involve 7 E-Tanks, 1023 bolts, and other maxima being exceeded.
+
+Maxing everything out and doing everything yields the code
+7853-5842-2245-7515.
