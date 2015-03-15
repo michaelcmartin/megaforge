@@ -65,3 +65,38 @@ mm2 = (function() {
     'debugInterpret': debugInterpret
   };
 })();
+
+sfxmm = (function () {
+    var conversion = {
+        'Blanka': 'Heat Man',
+        'C. Viper': 'Quick Man',
+        'Ryu': 'Flash Man',
+        'Urien': 'Crash Man',
+        'Dhalsim': 'Bubble Man',
+        'Chun-Li': 'Wood Man',
+        'Rolento': 'Air Man',
+        'Rose': 'Metal Man'};
+
+    var createPassword = function(elts) {
+        var converted = {}
+        for (k in elts) {
+            if (elts.hasOwnProperty(k)) {
+                if (conversion[k]) {
+                    converted[conversion[k]] = elts[k];
+                } else {
+                    converted[k] = elts[k];
+                }
+            }
+        }
+        return mm2.createPassword(converted);
+    };
+
+    return {
+        'options': ['Blanka', 'Chun-Li', 'C. Viper', 'Dhalsim',
+                'Rolento', 'Rose', 'Ryu', 'Urien',
+                null, ['E-Tanks', 0, 4]],
+        'createPassword': createPassword,
+        'interpret': mm2.interpret,
+        'debugInterpret': mm2.debugInterpret
+    };
+})();
