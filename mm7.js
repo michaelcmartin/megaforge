@@ -1,4 +1,41 @@
 mm7 = (function() {
+  var spec = ['Intro',
+              null,
+              'Burst Man',
+              'Cloud Man',
+              'Freeze Man',
+              'Junk Man',
+              null,
+              'Robot Museum',
+              null,
+              'Shade Man',
+              'Slash Man',
+              'Spring Man',
+              'Turbo Man',
+              null,
+              'Rush Jet',
+              'Rush Search',
+              'Suit Adapter',
+              'Protoshield',
+              'Energy Balancer',
+              'Power Enhancer',
+              null,
+              '[R] Tile',
+              '[U] Tile',
+              '[S] Tile',
+              '[H] Tile',
+              null,
+              'Found HyperBolt',
+              'Delivered HyperBolt',
+              'Rescued Beat',
+              null,
+              ['Bolts', 0, 999],
+              ['E-Tanks', 0, 4],
+              ['W-Tanks', 0, 4],
+              ['Beat Whistles', 0, 4],
+              'S-Tank',
+              'Exit'];
+
   var basepwd = [0, 7, 3, 5, 2, 5, 2, 7, 4, 4, 1, 6, 0, 3, 6, 2];
   var elements = {
     'Intro': [6, 2],
@@ -134,27 +171,56 @@ mm7 = (function() {
       }
     }
     return elts;
-  }
+  };
 
-  var brief = function(elts) {
-    var result = "";
-    var i;
-    for (i = 0; i < 16; ++i) {
-      if (i != 0 && i % 4 == 0) {
-        result = result + "-";
+  var createPassword = function(eltmap) {
+      var bolts = 0;
+      var etanks = 0;
+      var wtanks = 0;
+      var whistles = 0;
+      var elts = [];
+      for (k in eltmap) {
+          if (eltmap[k] && elements[k]) {
+              elts.push(k);
+          }
       }
-      result += elts[i];
-    }
-    return result;
-  }
+      if (typeof eltmap['Bolts'] === 'number') {
+          bolts = eltmap['Bolts'];
+      }
+      if (typeof eltmap['E-Tanks'] === 'number') {
+          etanks = eltmap['E-Tanks'];
+      }
+      if (typeof eltmap['W-Tanks'] === 'number') {
+          wtanks = eltmap['W-Tanks'];
+      }
+      if (typeof eltmap['Beat Whistles'] === 'number') {
+          whistles = eltmap['Beat Whistles'];
+      }
+      return createPasswordRaw(expandElts(elts, bolts, etanks, wtanks, whistles));
+  };
+
+  var interpret = function(pwdArray) {
+      return pwdArray.slice(0, 4).join("") + "-" + pwdArray.slice(4, 8).join("") + "-" + pwdArray.slice(8, 12).join("") + "-" + pwdArray.slice(12, 16).join("");
+  };
+
+  var debugInterpret = function(pwdArray) {
+      var resultArray = [];
+      for (var k in elements) {
+          if (elements.hasOwnProperty(k)) {
+              var i = elements[k][0];
+              var mask = elements[k][1];
+              if ((pwdArray[i] & mask) !== (basepwd[i] & mask)) {
+                  resultArray.push(k);
+              }
+          }
+      }
+      return "[" + resultArray.join(", ") + "]";
+  };
 
   return {
-    'createPassword': createPasswordRaw,
-    'expand': expandElts,
-    'brief': brief
+    'options': spec,
+    'createPassword': createPassword, // Still interim
+    'interpret': interpret,
+    'debugInterpret': debugInterpret
   };
 })();
-
-function dumpArr(a) {
-  return "[" + result.join(", ") + "]";
-}
