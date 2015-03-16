@@ -135,19 +135,19 @@ mm7 = (function() {
       elts[i] = "All Robots Defeated";
       ++i;
     }
-    for (power = 1; power < bolts && power < 1024; power *= 2) {
+    for (power = 1; power <= bolts && power < 1024; power *= 2) {
       if ((bolts & power) != 0) {
         elts[i] = power + " bolt";
         ++i;
       }
     }
-    for (power = 1; power < etanks && power < 8; power *= 2) {
+    for (power = 1; power <= etanks && power < 8; power *= 2) {
       if ((etanks & power) != 0) {
         elts[i] = power + " E-Tank";
         ++i;
       }
     }
-    for (power = 1; power < wtanks && power < 8; power *= 2) {
+    for (power = 1; power <= wtanks && power < 8; power *= 2) {
       if ((wtanks & power) != 0) {
         elts[i] = power + " W-Tank";
         ++i;
