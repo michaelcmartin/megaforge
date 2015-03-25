@@ -1,15 +1,23 @@
 megaforge = (function () {
     // Utility functions used by multiple games
 
-    // Turn a set of 5x5 codepoints (0-24, rowmajor) into the
-    // traditional Mega Man password strings
-    var gridInterpret = function(pwdArray) {
+    // Sort is a string sort by default; we often want numeric sort.
+    var numericSort = function(arr) { arr.sort(function(a, b) { return a-b; }); };
+
+    // Turn a set of NxN codepoints (0-N^2-1, rowmajor) into the
+    // traditional Mega Man password strings. 5 for MM2 and 6 for
+    // the others.
+    //
+    // This is effectively a curried function of two arguments. The
+    // algorithm spec will supply n, and the user will ultimately
+    // supply pwdArray.
+    var gridInterpret = function(n) { return function (pwdArray) {
         var result = "";
         var current = "";
-        var letters = ["A", "B", "C", "D", "E"];
+        var letters = ["A", "B", "C", "D", "E", "F"];
         for (var i = 0; i < pwdArray.length; i += 1) {
-            var letter = letters[Math.floor(pwdArray[i] / 5)];
-            var index = ((pwdArray[i] % 5) + 1).toString();
+            var letter = letters[Math.floor(pwdArray[i] / n)];
+            var index = ((pwdArray[i] % n) + 1).toString();
             if (current === "") {
                 current = letter;
                 result += letter;
@@ -20,11 +28,29 @@ megaforge = (function () {
             result += index;
         }
         return result;
-    };
+    }; };
 
-    // For debugging purposes: a handy array dump
+    var colorInterpret = function(pwdObj) {
+        var grid = gridInterpret(6);
+        var hasRed = pwdObj.red.length > 0;
+        var hasBlue = pwdObj.blue.length > 0;
+        var result = "";
+        if (hasRed) {
+            result += '<span style="color: red">Red: ' + grid(pwdObj.red) + '</span>';
+            if (hasBlue) { result += '<br>'; }
+        }
+        if (hasBlue) {
+            result += '<span style="color: blue">Blue: ' + grid(pwdObj.blue) + '</span>';
+        }
+        return result;
+    }
+
+    // For debugging purposes: a handy array dump and colordump
     var arrayDump = function(pwdArray) {
         return "[" + pwdArray.join(", ") + "]";
+    };
+    var colorDump = function(pwdObj) {
+        return "{ red: " + arrayDump(pwdObj['red']) + ", blue: "+arrayDump(pwdObj['blue']) + "}";
     };
 
     // Mega Man 2
@@ -61,14 +87,14 @@ megaforge = (function () {
                     result.push(newVal + 5);
                 }
             }
-            result.sort(function(a, b) { return a-b; });
+            numericSort(result);
             return result;
         };
 
         return {
             'options': spec,
-            'createPassword': createPassword, // Still interim
-            'interpret': gridInterpret,
+            'createPassword': createPassword,
+            'interpret': gridInterpret(5),
             'debugInterpret': arrayDump
         };
     })();
@@ -109,6 +135,74 @@ megaforge = (function () {
             'debugInterpret': mm2.debugInterpret
         };
     })();
+
+    // Mega Man 3
+    mm3 = (function () {
+        var spec = ['Gemini Man', 'Hard Man', 'Magnet Man', 'Needle Man',
+                    'Shadow Man', 'Snake Man', 'Spark Man', 'Top Man',
+                    null,
+                    'Gemini Man Docbots', 'Needle Man Docbots',
+                    'Shadow Man Docbots', 'Spark Man Docbots',
+                    null, 'Break Man', null, ['E-Tanks', 0, 9]];
+        var etankcodes = [16, 29, 27, 9, 4, 12, 19, 14, 31, 5];
+        var robots = {'Top Man': 2,
+                      'Spark Man': 33,
+                      'Needle Man': 20,
+                      'Gemini Man': 10,
+                      'Spark Man Docbots': 0,
+                      'Needle Man Docbots': 7,
+                      'Snake Man': 35,
+                      'Shadow Man': 23,
+                      'Magnet Man': 34,
+                      'Hard Man': 15,
+                      'Shadow Man Docbots': 3,
+                      'Gemini Man Docbots': 11,
+                      'Break Man': 24};
+        var robopairs = {'Top Man': 'Snake Man',
+                         'Spark Man': 'Shadow Man',
+                         'Needle Man': 'Magnet Man',
+                         'Gemini Man': 'Hard Man',
+                         'Spark Man Docbots': 'Shadow Man Docbots',
+                         'Needle Man Docbots': 'Gemini Man Docbots'};
+        var createPassword = function(elts) {
+            var etanks = 0;
+            var reds = [];
+            var blues = [];
+            if (typeof elts['E-Tanks'] === 'number') {
+                etanks = elts['E-Tanks'];
+            }
+            if (etanks < 0) { etanks = 0; }
+            if (etanks > 9) { etanks = 9; }
+            reds.push(etankcodes[etanks]);
+            if (elts['Break Man']) {
+                reds.push(robots['Break Man']);
+            }
+            for (var robot in robopairs) {
+                if (robopairs.hasOwnProperty(robot)) {
+                    var otherRobot = robopairs[robot];
+                    if (elts[robot]) {
+                        if (elts[otherRobot]) {
+                            blues.push(robots[robot]);
+                        } else {
+                            reds.push(robots[robot]);
+                        }
+                    } else if (elts[otherRobot]) {
+                        reds.push(robots[otherRobot]);
+                    }
+                }
+            }
+
+            numericSort(reds);
+            numericSort(blues);
+            
+            return { 'red': reds, 'blue': blues };
+        };
+
+        return { 'options': spec,
+                 'createPassword': createPassword,
+                 'interpret': colorInterpret,
+                 'debugInterpret': colorDump };
+    }());
 
     // Mega Man 7; the most sophisticated password system
     mm7 = (function() {
@@ -339,6 +433,7 @@ megaforge = (function () {
     })();
 
     return {"algorithms": { "Mega Man 2": mm2,
+                            "Mega Man 3": mm3,
                             "Mega Man 7": mm7,
                             "Street Fighter X Mega Man": sfxmm
                           }
