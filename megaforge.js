@@ -204,6 +204,145 @@ megaforge = (function () {
                  'debugInterpret': colorDump };
     }());
 
+    mm4 = (function() {
+        var spec = ['Bright Man', 'Dive Man', 'Drill Man', 'Dust Man',
+                    'Pharaoh Man', 'Ring Man', 'Skull Man', 'Toad Man',
+                    null, 'Balloon', 'Wire'];
+        var roboquads = [['Toad Man', 'Bright Man', 1, 6, 13, 0],
+                         ['Pharaoh Man', 'Drill Man', 2, 9, 14, 3],
+                         ['Ring Man', 'Dust Man', 4, 11, 16, 10],
+                         ['Dive Man', 'Skull Man', 18, 24, 31, 25],
+                         ['Balloon', 'Wire', 26, 20, 21, 32]];
+        var checksums = [34, 5, 7, 8, 12, 15, 17, 19, 27, 29, 30];
+        var createPassword = function(elts) {
+            var result = [];
+            var count = 0;
+            for (var i = 0; i < roboquads.length; ++i) {
+                var index = 2;
+                if (elts[roboquads[i][0]]) {
+                    count += 1;
+                    index += 1;
+                }
+                if (elts[roboquads[i][1]]) {
+                    count += 1;
+                    index += 2;
+                }
+                result.push(roboquads[i][index]);
+            }
+            result.push(checksums[count]);
+            numericSort(result);
+            return result;
+        };
+        return { 'options': spec,
+                 'createPassword': createPassword,
+                 'interpret': gridInterpret(6),
+                 'debugInterpret': arrayDump
+               };
+    }());
+
+    mm5 = (function() {
+        var spec = ['Charge Man', 'Crystal Man', 'Gravity Man', 'Gyro Man',
+                    'Napalm Man', 'Star Man', 'Stone Man', 'Wave Man',
+                    null,
+                    '[M] Tile (1)', '[E] Tile', '[G] Tile', '[A] Tile (1)',
+                    '[M] Tile (2)', '[A] Tile (2)', '[N] Tile', '[V] Tile'];
+        var primary = [[34, 10, 11, 16, 17, 5, 4, 35],
+                       [20, 32, 33, 2, 3, 27, 26, 21],
+                       [6, 19, 25, 12]];
+        var secondary = [[28, 22, 29, 22, 29, 23, 28, 23],
+                         [8, 14, 15, 14, 15, 9, 8, 9],
+                         [30, 1, 1, 30]];
+        var bitmap = {'Gravity Man': [0, 4],
+                      'Wave Man': [0, 2],
+                      'Stone Man': [0, 1],
+                      'Gyro Man': [1, 4],
+                      'Star Man': [1, 2],
+                      'Charge Man': [1, 1],
+                      'Napalm Man': [2, 2],
+                      'Crystal Man': [2, 1],
+                      '[M] Tile (1)': [3, 4],
+                      '[E] Tile': [3, 2],
+                      '[G] Tile': [3, 1],
+                      '[A] Tile (1)': [4, 4],
+                      '[M] Tile (2)': [4, 2],
+                      '[A] Tile (2)': [4, 1],
+                      '[N] Tile': [5, 2],
+                      '[V] Tile': [5, 1]};
+        var createPassword = function(elts) {
+            var reds = [];
+            var blues = [];
+            var scores = [0, 0, 0, 0, 0, 0];
+            for (var k in bitmap) {
+                if (bitmap.hasOwnProperty(k) && elts[k]) {
+                    scores[bitmap[k][0]] += bitmap[k][1];
+                }
+            }
+            for (var i = 0; i < 3; ++i) {
+                reds.push(primary[i][scores[i]]);
+                if (scores[i] === scores[3+i]) {
+                    blues.push(secondary[i][scores[3+i]]);
+                } else {
+                    blues.push(primary[i][scores[3+i]]);
+                }
+            }
+            numericSort(reds);
+            numericSort(blues);
+            return { 'red': reds, 'blue': blues };
+        }
+
+        return { 'options': spec,
+                 'createPassword': createPassword,
+                 'interpret': colorInterpret,
+                 'debugInterpret': colorDump };
+    }());
+
+    mm6 = (function() {
+        var spec = ['Blizzard Man', 'Centaur Man', 'Flame Man', 'Knight Man',
+                    'Plant Man', 'Tomahawk Man', 'Yamato Man', 'Wind Man',
+                    null,
+                    '[B] Tile', '[E] Tile', '[A] Tile', '[T] Tile',
+                    null, 'Energy Economizer'];
+        var noEcon = [['Blizzard Man', 'Tomahawk Man', '[B] Tile', 1, 13, 25, 9, 5, 17],
+                      ['Wind Man', 'Yamato Man', '[E] Tile', 6, 8, 10, 18, 11, 22],
+                      ['Plant Man', 'Knight Man', '[A] Tile', 2, 3, 4, 26, 14, 16],
+                      ['Flame Man', 'Centaur Man', '[T] Tile', 7, 0, 12, 24, 19, 31]];
+        var econ = [['Blizzard Man', 'Tomahawk Man', '[B] Tile', 0, 1, 6, 7, 12, 13],
+                    ['Wind Man', 'Yamato Man', '[E] Tile', 24, 25, 30, 31, 2, 3],
+                    ['Plant Man', 'Knight Man', '[A] Tile', 4, 5, 10, 11, 16, 17],
+                    ['Flame Man', 'Centaur Man', '[T] Tile', 14, 15, 20, 21, 26, 27]];
+        var createPassword = function(elts) {
+            var result = []
+            var table = noEcon;
+            if (elts['Energy Economizer']) {
+                table = econ;
+                result.push(28);
+            } else {
+                result.push(34);
+            }
+            for (var i = 0; i < table.length; ++i) {
+                var index = 3;
+                if (elts[table[i][0]]) {
+                    index += 1;
+                }
+                if (elts[table[i][1]]) {
+                    index += 2;
+                    if (elts[table[i][2]]) {
+                        index += 2;
+                    }
+                }
+                result.push(table[i][index]);
+            }
+            numericSort(result);
+            return result;
+        };
+
+        return { 'options': spec,
+                 'createPassword': createPassword,
+                 'interpret': gridInterpret(6),
+                 'debugInterpret': arrayDump
+               };
+    }());
+
     // Mega Man 7; the most sophisticated password system
     mm7 = (function() {
         var spec = ['Intro',
@@ -426,7 +565,7 @@ megaforge = (function () {
 
         return {
             'options': spec,
-            'createPassword': createPassword, // Still interim
+            'createPassword': createPassword,
             'interpret': interpret,
             'debugInterpret': debugInterpret
         };
@@ -434,6 +573,9 @@ megaforge = (function () {
 
     return {"algorithms": { "Mega Man 2": mm2,
                             "Mega Man 3": mm3,
+                            "Mega Man 4": mm4,
+                            "Mega Man 5": mm5,
+                            "Mega Man 6": mm6,
                             "Mega Man 7": mm7,
                             "Street Fighter X Mega Man": sfxmm
                           }
