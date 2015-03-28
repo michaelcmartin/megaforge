@@ -1,8 +1,23 @@
+// This is the sample generic-display system for Megaforge. To use it
+// in a webpage, you need to have first included megaforge.js, and
+// then need to run mf_display.initialize() on pageload
+// completion. Your page must also have these elements:
+//
+// - A <select> element with an ID of "gameSelect" that, when changed,
+//   calls mf_display.selectGame(this.selectedIndex)
+// - An empty <table> element with an ID of "optionsTable"
+// - An element that can contain text with an ID of "output"
+//
+// You may also have an element that may contain text with an ID of
+// "debug" - this will dump internal information about the processed
+// password when the password is updated.
 mf_display = (function () {
-    var options = {};
-    var gameList = [];
-    var game = null;
+    var selections = {};  // Currently selected options
+    var gameList = [];    // Available games to build passwords for
+    var game = null;      // Currently selected game object
 
+    // Enumerate the games in the megaforge object and fill up the
+    // "gameSelect" object based on that.
     var initialize = function () {
         gameList = [];
         for (var gameName in megaforge.algorithms) {
@@ -11,7 +26,6 @@ mf_display = (function () {
             }
         }
         gameList.sort();
-        // Build dropdown based on the master array of included game algorithms
         for (var i = 0; i < gameList.length; i++) {
 	    var newOption = document.createElement("OPTION");
 	    var optionText = document.createTextNode(gameList[i]);
@@ -24,25 +38,35 @@ mf_display = (function () {
         }
     };
 
+    // A new option has been selected. Update the "game" object, and
+    // recreate the "optionsTable" element according to the "options"
+    // array in the object.
     var selectGame = function (index) {
-        game = megaforge.algorithms[gameList[index]];
+        var nextGame = megaforge.algorithms[gameList[index]];
 
-        if (game) {
+        if (nextGame) {
+            game = nextGame;
             var table = document.getElementById("optionsTable");
+            // Clear selected options
+            selections = {}
+            // Clear table
             while (table.rows.length > 0) {
                 table.deleteRow(0);
             }
-            options = {}
+            // Recreate table from game.options
 	    for (var k = 0; k < game.options.length; k = k+1) {
                 var v = game.options[k];
 	        var newRow = table.insertRow(table.rows.length);
 	        var newCell = newRow.insertCell(0);
                 var newLabel;
                 var optionText = "";
+                // What this row is depends on the type of the value
                 if (v === null) {
+                    // null: Divider row.
                     var newHr = document.createElement("HR");
                     newCell.appendChild(newHr);
                 } else if (typeof(v) === 'string') {
+                    // string: checkbox
 		    newLabel = document.createElement("LABEL");
 		    newCell.appendChild(newLabel);
 		    var newCheckbox = document.createElement("INPUT");
@@ -50,16 +74,18 @@ mf_display = (function () {
 		    newCheckbox.id = v;
 		    newCheckbox.onclick = function () {
 		        if (this.checked) {
-			    options[this.id] = 1;
+			    selections[this.id] = 1;
 		        } else {
-                            delete options[this.id];
+                            delete selections[this.id];
 		        };
-		        update(options);
+		        update();
 		    };
 		    optionText = document.createTextNode(v);
 		    newLabel.appendChild(newCheckbox);
 		    newLabel.appendChild(optionText);
                 } else {
+                    // Otherwise, it must be a numeric type, so this
+                    // is an array of the form [name, min, max]
 		    newLabel = document.createElement("LABEL");
 		    newCell.appendChild(newLabel);
 		    var newNumeric = document.createElement("INPUT");
@@ -71,35 +97,37 @@ mf_display = (function () {
                     newNumeric.defaultValue = v[1];
                     newNumeric.value = v[1];
 		    newNumeric.onchange = function () {
-                        options[this.id] = parseInt(this.value, 10);
-                        update(options);
+                        selections[this.id] = parseInt(this.value, 10);
+                        update();
 		    };
 		    optionText = document.createTextNode(v[0] + ": ");
 		    newLabel.appendChild(optionText);
 		    newLabel.appendChild(newNumeric);
                 }
 	    }
+            // Reset the password to the (now-empty) password
+            update();
         }
-        mf_display.update();
     };
 
-    var update = function (optionMap) {
+    // Create the password from the selections field,
+    // interpret it in the default way, and write the simple password
+    // to the "output" element and the debug information to (if
+    // present) the "debug" element.
+    var update = function () {
         var pwdArray = [];
         var password = null;
-        if (!(optionMap)) {
-	    optionMap = {};
-        };
         if (game) {
-            pwdArray = game.createPassword(optionMap);
+            pwdArray = game.createPassword(selections);
             password = game.interpret(pwdArray);
         }
         if (password) {
 	    document.getElementById("output").innerHTML = password;
             var internalDebug = "{";
-            for (var k in optionMap) {
-                if (optionMap.hasOwnProperty(k)) {
+            for (var k in selections) {
+                if (selections.hasOwnProperty(k)) {
                     internalDebug += (internalDebug === "{") ? "" : ", ";
-                    internalDebug += k + ": " + optionMap[k];
+                    internalDebug += k + ": " + selections[k];
                 }
             }
             internalDebug += "}";
@@ -112,6 +140,5 @@ mf_display = (function () {
 
     return { 'initialize': initialize,
              'selectGame': selectGame,
-             'update': update
            };
 })();
