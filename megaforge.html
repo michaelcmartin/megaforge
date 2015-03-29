@@ -1,24 +1,25 @@
 <html>
 <head>
-<title>MegaForge</title>
-<style type="text/css">
-.heading {font-weight: bold;}
-</style>
-<script src="megaforge.js"></script>
-<script src="mf_display.js"></script>
+  <title>MegaForge</title>
+  <script src="megaforge.js"></script>
+  <script src="mf_display.js"></script>
 </head>
 <body onload="mf_display.initialize();">
-<table>
-<tr>
-<td id="output"></td>
-</tr>
-<tr>
-<td>
-Game: <select id="gameSelect" onChange="mf_display.selectGame(this.selectedIndex);"></select>
-</td>
-</tr>
-</table>
-<table id="optionsTable">
-</table>
+  <div>
+    <div style="float:left">
+      Game: <select id="gameSelect" onChange="mf_display.selectGame(this.selectedIndex);"></select>
+      <hr>
+      <table id="optionsTable">
+      </table>
+    </div>
+    <div style="text-align: center;">
+      <h1>MegaForge</h1>
+      <h3>A password generator for the Mega Man series</h3>
+      <h2>Your password is:<br>
+      <span id="output"></span></h2>
+    </div>
+    <p>Select a game from the dropdown to the left and then select the options you want enabled. MegaForge does not sanity-check your selections; some impossible combinations may be rejected by the game as illegal&mdash;though not all will be!</p>
+  </div>
+  <p style="position: fixed; bottom: 0px; right: 1ch;">MegaForge is hosted on Github. <a href="https://github.com/michaelcmartin/megaforge">Visit its project page here.</a></p
 </body>
 </html>
