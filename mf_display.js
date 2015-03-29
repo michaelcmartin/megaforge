@@ -97,7 +97,20 @@ mf_display = (function () {
                     newNumeric.defaultValue = v[1];
                     newNumeric.value = v[1];
 		    newNumeric.onchange = function () {
-                        selections[this.id] = parseInt(this.value, 10);
+                        // Pulling data out of the DOM ends up being
+                        // in string format. We need numbers, so we
+                        // parse them out.
+                        var nVal = parseInt(this.value, 10);
+                        var nMin = parseInt(this.min, 10);
+                        var nMax = parseInt(this.max, 10);
+                        if (nVal < nMin) {
+                            nVal = mMin;
+                            this.value = this.min;
+                        } else if (nVal > nMax) {
+                            nVal = nMax;
+                            this.value = this.max;
+                        }
+                        selections[this.id] = nVal;
                         update();
 		    };
 		    optionText = document.createTextNode(v[0] + ": ");
