@@ -11,7 +11,9 @@
 // You may also have an element that may contain text with an ID of
 // "debug" - this will dump internal information about the processed
 // password when the password is updated.
-mf_display = (function () {
+
+import * as megaforge from "./megaforge.js";
+
     var selections = {};  // Currently selected options
     var gameList = [];    // Available games to build passwords for
     var game = null;      // Currently selected game object
@@ -151,7 +153,6 @@ mf_display = (function () {
         }
     };
 
-    return { 'initialize': initialize,
-             'selectGame': selectGame,
-           };
-})();
+    window.mf_display = { 'initialize': initialize,
+                          'selectGame': selectGame
+                        };

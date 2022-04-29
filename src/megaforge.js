@@ -37,7 +37,6 @@
 //                   processed. This is unlikely to be useful to end
 //                   users, as the name suggests.
 
-megaforge = (function () {
     // ----- Module-private routines -----
 
     // The sort method on arrays is a string sort by default; we often
@@ -98,7 +97,7 @@ megaforge = (function () {
     // ----- Per-game algorithms -----
 
     // Mega Man 2 algorithm
-    mm2 = (function() {
+    let mm2 = (function() {
         var spec = ['Air Man', 'Bubble Man', 'Crash Man', 'Flash Man',
                     'Heat Man', 'Metal Man', 'Quick Man', 'Wood Man',
                     null, ['E-Tanks', 0, 4]];
@@ -129,7 +128,7 @@ megaforge = (function () {
                 etanks = elts['E-Tanks'];
             }
             result.push(etanks);
-            for (robotMaster in elements) {
+            for (var robotMaster in elements) {
                 if (elements.hasOwnProperty(robotMaster)) {
                     var newVal = 0;
                     if (elts[robotMaster]) {
@@ -156,7 +155,7 @@ megaforge = (function () {
     // Street Fighter X Mega Man is ultimately a reskin of MM2's
     // password system. We map the characters to MM2 characters and
     // then forward everything to the mm2 object.
-    sfxmm = (function () {
+    let sfxmm = (function () {
         var conversion = {
             'Blanka': 'Heat Man',
             'C. Viper': 'Quick Man',
@@ -169,7 +168,7 @@ megaforge = (function () {
 
         var createPassword = function(elts) {
             var converted = {}
-            for (k in elts) {
+            for (var k in elts) {
                 if (elts.hasOwnProperty(k)) {
                     if (conversion[k]) {
                         converted[conversion[k]] = elts[k];
@@ -192,7 +191,7 @@ megaforge = (function () {
     })();
 
     // Mega Man 3: a set of red and blue dots on a 6x6 grid.
-    mm3 = (function () {
+    let mm3 = (function () {
         var spec = ['Gemini Man', 'Hard Man', 'Magnet Man', 'Needle Man',
                     'Shadow Man', 'Snake Man', 'Spark Man', 'Top Man',
                     null,
@@ -266,7 +265,7 @@ megaforge = (function () {
     }());
 
     // Mega Man 4
-    mm4 = (function() {
+    let mm4 = (function() {
         var spec = ['Bright Man', 'Dive Man', 'Drill Man', 'Dust Man',
                     'Pharaoh Man', 'Ring Man', 'Skull Man', 'Toad Man',
                     null, 'Balloon', 'Wire'];
@@ -311,7 +310,7 @@ megaforge = (function () {
     }());
 
     // Mega Man 5
-    mm5 = (function() {
+    let mm5 = (function() {
         var spec = ['Charge Man', 'Crystal Man', 'Gravity Man', 'Gyro Man',
                     'Napalm Man', 'Star Man', 'Stone Man', 'Wave Man',
                     null,
@@ -377,7 +376,7 @@ megaforge = (function () {
     // select values to use instead of trying to generate all possible
     // results. For the full set of possibilities, consult
     // algorithms.txt.
-    mm6 = (function() {
+    let mm6 = (function() {
         var spec = ['Blizzard Man', 'Centaur Man', 'Flame Man', 'Knight Man',
                     'Plant Man', 'Tomahawk Man', 'Yamato Man', 'Wind Man',
                     null,
@@ -438,7 +437,7 @@ megaforge = (function () {
     }());
 
     // Mega Man 7; the most sophisticated password system.
-    mm7 = (function() {
+    let mm7 = (function() {
         var spec = ['Intro',
                     null,
                     'Burst Man',
@@ -634,7 +633,7 @@ megaforge = (function () {
             var wtanks = 0;
             var whistles = 0;
             var elts = [];
-            for (k in eltmap) {
+            for (var k in eltmap) {
                 if (eltmap.hasOwnProperty(k) && eltmap[k] && elements[k]) {
                     elts.push(k);
                 }
@@ -684,16 +683,11 @@ megaforge = (function () {
         };
     })();
 
-    // Return the actual module object. So far only the algorithms
-    // element exists.
-    return {"algorithms": { "Mega Man 2": mm2,
-                            "Mega Man 3": mm3,
-                            "Mega Man 4": mm4,
-                            "Mega Man 5": mm5,
-                            "Mega Man 6": mm6,
-                            "Mega Man 7": mm7,
-                            "Street Fighter X Mega Man": sfxmm
-                          }
-           };
-
-}());
+    export let algorithms = { "Mega Man 2": mm2,
+                              "Mega Man 3": mm3,
+                              "Mega Man 4": mm4,
+                              "Mega Man 5": mm5,
+                              "Mega Man 6": mm6,
+                              "Mega Man 7": mm7,
+                              "Street Fighter X Mega Man": sfxmm
+                            };
